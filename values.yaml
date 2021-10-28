@@ -1,0 +1,103 @@
+# Default values for renovate.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: docker.io/renovate/renovate
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+cronjob:
+  # At 01:00 every day
+  schedule: '*/5 * * * *'
+  concurrencyPolicy: ''
+  failedJobsHistoryLimit: ''
+  successfulJobsHistoryLimit: ''
+
+renovate:
+  env: {}
+    # LOG_LEVEL
+    # Define the log level of renovate
+    # LOG_LEVEL: ""
+
+    # RENOVATE_AUTODISCOVER
+    # You can set RENOVATE_AUTODISCOVER to true to run Renovate on all repos you
+    # have push access to. Alternatively can this property also be defined via
+    # config.json file.
+    # https://docs.renovatebot.com/self-hosted-configuration/#autodiscover
+
+    # RENOVATE_ENDPOINT
+    # Custom endpoint. Mostly path to the API of the SCM software. Alternatively
+    # can this property also be defined via config.json file.
+    # https://docs.renovatebot.com/self-hosted-configuration/#endpoint
+    # RENOVATE_ENDPOINT: ""
+
+    # RENOVATE_GIT_AUTHOR
+    # Name and email adress for the renovate bot. Alternatively can this
+    # property also be defined via config.json file.
+    # RENOVATE_GIT_AUTHOR: "Firstname Lastname <firname.lastname@example.local"
+
+    # RENOVATE_PLATFORM
+    # Platform type of repository. Alternatively can this property also be
+    # defined via config.json file.
+    # https://docs.renovatebot.com/self-hosted-configuration/#platform
+    # RENOVATE_PLATFORM: ""
+  secEnv: {}
+    # GITHUB_COM_TOKEN
+    # https://github.com/renovatebot/renovate/blob/main/docs/usage/getting-started/running.md#githubcom-token-for-release-notes
+    # GITHUB_COM_TOKEN: ""
+  appConfig: ''
+  sshConfig:
+    enabled: false
+    # existingSecret:
+    # id_rsa: ''
+    # id_rsa.pub: ''
+    # id_ed25519: ''
+    # id_ed25519.pub: ''
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+affinity: {}
+
+nodeSelector: {}
+
+tolerations: []

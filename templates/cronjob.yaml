@@ -1,0 +1,95 @@
+{{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: batch/v1
+{{- else -}}
+apiVersion: batch/v1beta1
+{{- end }}
+kind: CronJob
+metadata:
+  name: {{ include "renovate.fullname" . }}
+  labels:
+    {{- include "renovate.labels" . | nindent 4 }}
+spec:
+  schedule: "{{ .Values.cronjob.schedule }}"
+  {{- with .Values.cronjob.concurrencyPolicy }}
+  concurrencyPolicy: {{ . }}
+  {{- end }}
+  {{- with .Values.cronjob.failedJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ . }}
+  {{- end }}
+  {{- with .Values.cronjob.successfulJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ . }}
+  {{- end }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        spec:
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          containers:
+            - name: {{ .Chart.Name }}
+              {{- if or .Values.renovate.env .Values.renovate.secEnv }}
+              envFrom:
+              {{- if .Values.renovate.env }}
+              - configMapRef:
+                  name: {{ include "renovate.fullname" . }}-env
+              {{- end }}
+              {{- if .Values.renovate.secEnv }}
+              - secretRef:
+                  name: {{ include "renovate.fullname" . }}-secret-env
+              {{- end }}
+              {{- end }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              volumeMounts:
+              {{- if .Values.renovate.appConfig }}
+              - name: app-config
+                mountPath: /usr/src/app/config.json
+                subPath: config.json
+              {{- end }}
+              {{- if .Values.renovate.sshConfig.enabled }}
+              - name: ssh-config
+                mountPath: /home/ubuntu/.ssh
+                readOnly: true
+              {{- end }}
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: Never
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
+          serviceAccountName: {{ include "renovate.serviceAccountName" . }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumes:
+          {{- if .Values.renovate.appConfig }}
+          - name: app-config
+            secret:
+              secretName: {{ include "renovate.fullname" . }}-app-config
+          {{- end }}
+          {{- if and .Values.renovate.sshConfig.enabled (not .Values.renovate.sshConfig.existingSecret) }}
+          - name: ssh-config
+            secret:
+              secretName: {{ include "renovate.fullname" . }}-ssh-config
+          {{- else if and .Values.renovate.sshConfig.enabled .Values.renovate.sshConfig.existingSecret -}}
+          - name: ssh-config
+            secret:
+              secretName: {{ .Values.renovate.sshConfig.existingSecret }}
+          {{- end -}}

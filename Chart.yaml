@@ -1,0 +1,24 @@
+apiVersion: v2
+name: renovate
+description: Helm chart for renovate bot
+type: application
+version: 0.1.0
+appVersion: 28.14.0-slim
+icon: https://avatars3.githubusercontent.com/u/38656520?s=400&v=4
+
+keywords:
+- renovate
+- github
+- gitlab
+- gitea
+- ci/cd
+- bot
+
+sources:
+- https://github.com/renovatebot/renovate
+- https://hub.docker.com/r/renovate/renovate
+- https://git.cryptic.systems/volker.raschek/renovate-charts
+
+maintainers:
+- name: Markus Pesch
+  email: markus.pesch+apps@cryptic.systems
