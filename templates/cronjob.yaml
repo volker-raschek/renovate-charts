@@ -52,10 +52,10 @@ spec:
               securityContext:
                 {{- toYaml .Values.securityContext | nindent 16 }}
               volumeMounts:
-              {{- if .Values.renovate.appConfig }}
+              {{- if .Values.renovate.appConfig.content }}
               - name: app-config
-                mountPath: /usr/src/app/config.json
-                subPath: config.json
+                mountPath: {{ printf "/usr/src/app/config.%s" .Values.renovate.appConfig.extension }}
+                subPath: config
               {{- end }}
               {{- if .Values.renovate.sshConfig.enabled }}
               - name: ssh-config

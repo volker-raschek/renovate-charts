@@ -74,7 +74,9 @@ renovate:
     # GITHUB_COM_TOKEN
     # https://github.com/renovatebot/renovate/blob/main/docs/usage/getting-started/running.md#githubcom-token-for-release-notes
     # GITHUB_COM_TOKEN: ""
-  appConfig: ''
+  appConfig:
+    extension: json
+    content: '{}'
   sshConfig:
     enabled: false
     # existingSecret:

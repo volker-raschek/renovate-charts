@@ -3,7 +3,7 @@ name: renovate
 description: Helm chart for renovate bot
 type: application
 version: 0.2.0
-appVersion: "29.14.0-slim"
+appVersion: "31.11.2-slim"
 icon: https://avatars3.githubusercontent.com/u/38656520?s=400&v=4
 
 keywords:
