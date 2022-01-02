@@ -15,5 +15,7 @@
       "depNameTemplate": "docker.io/renovate/renovate",
       "datasourceTemplate": "docker"
     }
-  ]
+  ],
+  "rebaseLabel": "renovate/rebase",
+  "rebaseWhen": "behind-base-branch"
 }
