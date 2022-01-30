@@ -13,7 +13,7 @@
     },
     {
       "addLabels": [ "renovate/renovate", "renovate/automerge" ],
-      "automerge": false,
+      "automerge": true,
       "matchPackageNames": [ "renovate" ],
       "matchManagers": [ "regex" ],
       "matchUpdateTypes": [ "minor", "patch"]
