@@ -59,6 +59,7 @@ name: release
 
 platform:
   os: linux
+  arсh: amd64
 
 steps:
 - name: release-helm-chart
