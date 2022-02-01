@@ -12,12 +12,12 @@ can be installed via helm.
 
 ```bash
 helm repo add volker.raschek https://charts.cryptic.systems/volker.raschek
-helm install drone volker.raschek/renovate
+helm install renovate volker.raschek/renovate
 ```
 
 ## Customization
 
 All [configuration
-options](https://docs.drone.io/runner/kubernetes/configuration/reference/) can
+options](https://docs.renovatebot.com/self-hosted-configuration/) can
 be defined in the `values.yml` file below the `config` section. Alternatively
 can be the options passed via the `--set` flag of the `helm install` command.
