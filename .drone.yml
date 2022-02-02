@@ -74,6 +74,7 @@ steps:
     HELM_REPO_USERNAME:
       from_secret: helm_repo_username
   image: docker.io/volkerraschek/helm:3.8.0
+  pull: always
 
 trigger:
   event:
