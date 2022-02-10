@@ -47,6 +47,20 @@ cronjob:
 
 renovate:
   env: {}
+    # DOCKER_HOST
+    # Specify a native docker host instead of using dind.
+    # DOCKER_HOST: ""
+
+    # DOCKER_CERT_PATH
+    # Specify the path where TLS certificates can be found to encrypt the
+    # traffic between TCP socket and renovate. The certificates must be provided
+    # via extra secret volumes.
+    # DOCKER_CERT_PATH: ""
+
+    # DOCKER_TLS_VERIFY
+    # Ignore TLS certificate verification: "true" or "false"
+    # DOCKER_TLS_VERIFY: "true"
+
     # LOG_LEVEL
     # Define the log level of renovate
     # LOG_LEVEL: ""
