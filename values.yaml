@@ -41,6 +41,7 @@ cronjob:
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 1
+  startingDeadlineSeconds: ''
 
 renovate:
   env: {}
