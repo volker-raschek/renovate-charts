@@ -5,6 +5,10 @@ apiVersion: batch/v1beta1
 {{- end }}
 kind: CronJob
 metadata:
+  {{- if .Values.cronjob.annotations }}
+  annotations:
+    {{ toYaml .Values.cronjob.annotations | nindent 4 }}
+  {{- end }}
   name: {{ include "renovate.fullname" . }}
   labels:
     {{- include "renovate.labels" . | nindent 4 }}
