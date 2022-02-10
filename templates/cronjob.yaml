@@ -10,6 +10,9 @@ metadata:
     {{- include "renovate.labels" . | nindent 4 }}
 spec:
   schedule: "{{ .Values.cronjob.schedule }}"
+  {{- with .Values.cronjob.suspend }}
+  suspend: {{ . }}
+  {{- end }}
   {{- with .Values.cronjob.concurrencyPolicy }}
   concurrencyPolicy: {{ . }}
   {{- end }}

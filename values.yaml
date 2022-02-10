@@ -38,6 +38,7 @@ securityContext: {}
 
 cronjob:
   schedule: '@hourly'
+  suspend: false
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 3
   successfulJobsHistoryLimit: 1
